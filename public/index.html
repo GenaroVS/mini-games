@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+  <title>Mini-Games</title>
+</head>
+<body>
+  <header>
+    <h2 class='game-title'></h2>
+  </header>
+  <div class="carousel">
+    <button class="carousel-button left">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="carousel-container">
+      <ul class="carousel-track">
+        <li class="carousel-slide">
+          <a href='/tictactoe'>
+            <img class='carousel-image' src='images/tictactoe.png' alt='Tic tac toe'/>
+          </a>
+        </li>
+        <li class="carousel-slide">
+        </li>
+        <li class="carousel-slide">
+        </li>
+      </ul>
+    </div>
+
+    <button class="carousel-button right">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="carousel-nav">
+      <button class="carousel-dot current-dot"></button>
+      <button class="carousel-dot"></button>
+      <button class="carousel-dot"></button>
+    </div>
+  </div>
+
+  <script src='app.js'></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.game-title {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.carousel {
+  position: relative;
+  height: 500px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.carousel-container {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: border 100ms linear;
+  border: 2px solid transparent;
+}
+
+.carousel-container:hover,
+.carousel-container:active {
+  border: 2px solid black;
+}
+
+.carousel-track {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  height: 100%;
+  position: relative;
+  transition: transform 400ms ease-in;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.carousel-slide:nth-child(2) {
+  background-color: orangered;
+}
+
+.carousel-slide:nth-child(3) {
+  background-color: palegreen;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel .left {
+  left: -50px;
+  cursor: pointer;
+}
+
+.carousel .left i {
+  font-size: 20px;
+}
+
+.carousel .right {
+  right: -50px;
+  cursor: pointer;
+}
+
+.carousel .right i {
+  font-size: 20px;
+}
+
+
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.carousel-dot {
+  border: 0;
+  margin: 0 10px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.current-dot {
+  background: rgba(0,0,0,0.7);
+}
