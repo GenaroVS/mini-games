@@ -1,0 +1,29 @@
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  height: 500px;
+  border: 2px solid black;
+}
+
+.board > div {
+  width: 10%;
+  height: 10%;
+}
+
+.bomb {
+  background-color: black;
+}
+
+.box {
+  background-color: #357DB5;
+}
+
+.reveal {
+  background-color: #FFE37F;
+}
+
+.box:nth-child(odd) {
+  background-color: #136AAC;
+}
+
