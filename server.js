@@ -12,7 +12,7 @@ app.use(compression());
 
 app.use(express.static('public'));
 app.use(express.static('tictactoe'));
-app.use(express.static('minesweeper/public'));
+app.use(express.static('minesweeper/build'));
 
 app.get('/tictactoe', (req, res, next) => {
   let filePath = path.join(__dirname, 'tictactoe', 'tictactoe.html')
@@ -27,7 +27,7 @@ app.get('/tictactoe', (req, res, next) => {
 });
 
 app.get('/minesweeper', (req, res, next) => {
-  let filePath = path.join(__dirname, 'minesweeper/public/minesweeper.html')
+  let filePath = path.join(__dirname, 'minesweeper/build/index.html')
   res.status(200);
   res.sendFile(filePath, (err) => {
     if (err) {
