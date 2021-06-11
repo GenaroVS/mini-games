@@ -1,37 +1,30 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import boardReducers from './reducers';
 
-type board = number[][];
-type coord = {
-  readonly row: number,
-  readonly col: number
+export type Tile = {
+  value: number;
+  flag: boolean;
+  revealed: boolean;
 }
-
-const revealTraverse = (board: board, row: number, col: number) => {
-
-}
+export type BoardType = Tile[][];
 
 export interface BoardState {
-  board: board;
+  board: BoardType;
+  size: number;
+  bombs: number;
 }
 
 const initialState: BoardState = {
-  board: []
+  board: [],
+  size: 0,
+  bombs: 0,
 };
 
 export const counterSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {
-    build: (state, action: PayloadAction<board>) => {
-      state.board = action.payload;
-    },
-
-    reveal: (state, action: PayloadAction<coord>) => {
-      let { row, col } = action.payload
-      revealTraverse(state.board, row, col);
-    }
-  }
+  reducers: boardReducers
 });
 
 export const { build, reveal } = counterSlice.actions;

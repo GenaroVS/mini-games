@@ -1,29 +1,39 @@
 .board {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   width: 500px;
   height: 500px;
   border: 2px solid black;
 }
 
 .board > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 10%;
   height: 10%;
+  font-size: 1.5rem;
 }
 
 .bomb {
   background-color: black;
 }
 
-.box {
+.hidden {
   background-color: #357DB5;
+}
+
+.hidden:nth-child(odd) {
+  background-color: #136AAC;
 }
 
 .reveal {
   background-color: #FFE37F;
 }
 
-.box:nth-child(odd) {
-  background-color: #136AAC;
+.bad-icons {
+  color: #FF4233;
 }
+
 
