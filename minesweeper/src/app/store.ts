@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import boardReducer from '../features/board/boardSlice';
+import dashSlice from '../features/dashboard/dashSlice';
 
 const store = configureStore({
   reducer: {
     board: boardReducer,
+    dash: dashSlice
   },
 });
 

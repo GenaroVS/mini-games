@@ -1,4 +1,5 @@
 .board {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -7,7 +8,7 @@
   border: 2px solid black;
 }
 
-.board > div {
+.tile {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,6 +35,20 @@
 
 .bad-icons {
   color: #FF4233;
+}
+
+.gameEnd {
+  display: flex;
+  justify-content: center;
+  align-items: center;;
+  position: absolute;
+  background-color: black;
+  opacity: .1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
 }
 
 

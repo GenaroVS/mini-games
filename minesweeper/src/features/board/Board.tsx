@@ -1,56 +1,37 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { build, reveal, endGame, BoardType } from './boardSlice';
+import { build, reveal, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
-const flag = document.createElement('i');
-const skull = document.createElement('i');
-flag.classList.add('fas', 'fa-flag', 'bad-icons');
-skull.classList.add('fas', 'fa-skull-crossbones', 'bad-icons');
+import Tile from './Tile';
 
 const Board = () => {
-  const { board, gameOver, gameWon } = useAppSelector(state => state.board);
+  const { board, gameOver, tilesNeeded } = useAppSelector(state => state.board);
   const dispatch = useAppDispatch();
 
   const renderBoard = (board: BoardType):JSX.Element[][] => {
     return board.map((row, i) => {
       return row.map((box, j) => {
-        if (gameOver) {
-          if (box.isBomb) {
-            return (
-              <div className='reveal' data-row={i} data-col={j}>
-                <i className='fas fa-skull-crossbones bad-icons'></i>
-              </div>
-            )
-          } else {
-            return (
-              <div className='reveal' data-row={i} data-col={j}>
-                {box.value === 0 ? '' : box.value}
-              </div>
-            )
-          }
-        } else if (box.isBomb) {
-          return <div className='bomb' data-row={i} data-col={j}></div>;
-        } else if (box.revealed) {
-          return (
-            <div className='reveal' data-row={i} data-col={j}>
-              {box.value === 0 ? '' : box.value}
-            </div>
-          )
-        } else {
-          return <div className='hidden' data-row={i} data-col={j}></div>
-        }
+        return <Tile
+          gameOver={gameOver}
+          tilesNeeded={tilesNeeded}
+          row={i}
+          col={j}
+          {...box}
+          />
       });
     });
   }
 
   const clickHandler: React.MouseEventHandler<HTMLDivElement> = (e) => {
     let target = e.target as typeof e.target & HTMLDivElement;
+    if (target.classList.contains('gameEnd')) return;
+    if (target.nodeName === 'I' || target.hasChildNodes()) return;
 
     let row = parseInt(target.dataset.row as string, 10);
     let col = parseInt(target.dataset.col as string, 10);
 
     if (board[row][col].isBomb) {
-      dispatch(endGame(true));
+      dispatch(endGame())
     } else if (!board[row][col].revealed) {
       dispatch(reveal({ row, col }));
     }
@@ -60,14 +41,17 @@ const Board = () => {
     e.preventDefault();
     let target = e.target as typeof e.target & HTMLDivElement;
 
-    if (target.nodeName === 'DIV') {
-      if (target.hasChildNodes()) {
-        target.removeChild(flag);
-      } else {
-        target.appendChild(flag);
-      }
-    } else if (target.nodeName === 'I' && target.parentNode) {
-      target.parentNode.removeChild(target);
+    if (target.classList.contains('gameEnd')) return;
+
+    if (target.nodeName === 'I') {
+      let parent = target.parentNode as HTMLDivElement;
+      let row = parseInt(parent.dataset.row as string, 10);
+      let col = parseInt(parent.dataset.col as string, 10);
+      dispatch(flag({ row, col }))
+    } else {
+      let row = parseInt(target.dataset.row as string, 10);
+      let col = parseInt(target.dataset.col as string, 10);
+      dispatch(flag({ row, col }))
     }
 
     return false;
@@ -86,6 +70,7 @@ const Board = () => {
       onContextMenu={flagHandler}
       onClick={clickHandler}
       className='board'>
+      { (gameOver || tilesNeeded === 0) && <div className='gameEnd'></div> }
       {board && renderBoard(board)}
     </div>
   )

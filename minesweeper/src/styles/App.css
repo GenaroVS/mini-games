@@ -1,6 +1,23 @@
 #App {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+.back {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border 100ms linear;
+}
+
+.back:hover,
+.back:active {
+  border-bottom: 2px solid black;
 }

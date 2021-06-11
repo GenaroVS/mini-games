@@ -12,8 +12,11 @@ type buildPayload = {
   readonly bombs: number;
 }
 
-const revealTraverse = (board: BoardType, row: number, col: number) => {
+const revealTraverse = (state: BoardState, row: number, col: number) => {
   let bombsNearby = 0;
+  let { board } = state
+  state.tilesNeeded -= 1;
+
 
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
@@ -39,7 +42,7 @@ const revealTraverse = (board: BoardType, row: number, col: number) => {
       if (i === 0 && j === 0) continue;
       if (board[row + i] && board[row + i][col + j]) {
         if (!board[row + i][col + j].revealed) {
-          revealTraverse(board, row + i, col + j);
+          revealTraverse(state, row + i, col + j);
         }
       }
     }
@@ -54,6 +57,7 @@ const createRandBoard = (bombs: number, width: number, height: number):BoardType
       randBoard[i].push({
         value: 0,
         isBomb: false,
+        flagged: false,
         revealed: false
       });
     }
@@ -72,17 +76,22 @@ const boardReducers = {
   build: (state: BoardState, action: PayloadAction<buildPayload>) => {
     let { width, height, bombs } = action.payload;
     state.board = createRandBoard(bombs, width, height)
-    state.size = width * height;
-    state.bombs = bombs;
+    state.tilesNeeded = (width * height) - bombs;
   },
 
   reveal: (state: BoardState, action: PayloadAction<revealPayload>) => {
     let { row, col } = action.payload
-    revealTraverse(state.board, row, col);
+    revealTraverse(state, row, col);
   },
 
-  endGame: (state: BoardState, action: PayloadAction<boolean>) => {
-    state.gameOver = action.payload;
+  endGame: (state: BoardState) => {
+    state.gameOver = true;
+  },
+
+  flag: (state: BoardState, action: PayloadAction<revealPayload>) => {
+    let { row, col } = action.payload;
+    let tile = state.board[row][col];
+    tile.flagged = !tile.flagged
   }
 }
 
