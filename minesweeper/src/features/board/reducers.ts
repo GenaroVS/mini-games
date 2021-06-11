@@ -19,7 +19,7 @@ const revealTraverse = (board: BoardType, row: number, col: number) => {
     for (let j = -1; j <= 1; j++) {
       if (i === 0 && j === 0) continue;
       if (board[row + i] && board[row + i][col + j]) {
-        if (board[row + i][col + j].value === -1) {
+        if (board[row + i][col + j].isBomb) {
           bombsNearby += 1;
         }
       }
@@ -53,7 +53,7 @@ const createRandBoard = (bombs: number, width: number, height: number):BoardType
     for (var j = 0; j < width; j++) {
       randBoard[i].push({
         value: 0,
-        flag: false,
+        isBomb: false,
         revealed: false
       });
     }
@@ -61,7 +61,7 @@ const createRandBoard = (bombs: number, width: number, height: number):BoardType
   while (bombs > 0) {
     var x = Math.floor(Math.random() * width);
     var y = Math.floor(Math.random() * height);
-    randBoard[y][x].value === -1 ? bombs += 1 : randBoard[y][x].value = -1;
+    randBoard[y][x].isBomb ? bombs += 1 : randBoard[y][x].isBomb = true;
     bombs -= 1;
   }
 
@@ -79,8 +79,11 @@ const boardReducers = {
   reveal: (state: BoardState, action: PayloadAction<revealPayload>) => {
     let { row, col } = action.payload
     revealTraverse(state.board, row, col);
-  }
+  },
 
+  endGame: (state: BoardState, action: PayloadAction<boolean>) => {
+    state.gameOver = action.payload;
+  }
 }
 
 export default boardReducers;

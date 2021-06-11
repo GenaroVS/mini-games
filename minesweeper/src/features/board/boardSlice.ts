@@ -4,7 +4,7 @@ import boardReducers from './reducers';
 
 export type Tile = {
   value: number;
-  flag: boolean;
+  isBomb: boolean;
   revealed: boolean;
 }
 export type BoardType = Tile[][];
@@ -13,12 +13,16 @@ export interface BoardState {
   board: BoardType;
   size: number;
   bombs: number;
+  gameOver: boolean;
+  gameWon: boolean;
 }
 
 const initialState: BoardState = {
   board: [],
   size: 0,
   bombs: 0,
+  gameOver: false,
+  gameWon: false
 };
 
 export const counterSlice = createSlice({
@@ -27,7 +31,7 @@ export const counterSlice = createSlice({
   reducers: boardReducers
 });
 
-export const { build, reveal } = counterSlice.actions;
+export const { build, reveal, endGame } = counterSlice.actions;
 
 export const selectBoard = (state: RootState) => state.board;
 
