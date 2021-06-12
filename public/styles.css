@@ -6,7 +6,8 @@ body {
   padding: 0;
   margin: 0;
   font-size: 16px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  overflow-x: hidden;
 }
 
 .game-title {
@@ -51,10 +52,6 @@ body {
   cursor: pointer;
 }
 
-.carousel-slide:nth-child(2) {
-  background-color: orangered;
-}
-
 .carousel-slide:nth-child(3) {
   background-color: palegreen;
 }
@@ -66,9 +63,18 @@ body {
 }
 
 .carousel-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  border-radius: 50%;
+  border: 1px solid black;
+  background-color: rgba(0,0,0,0.2);
+  width: 35px;
+  height: 35px;
+  z-index: 1;
 }
 
 .carousel .left {
@@ -86,7 +92,7 @@ body {
 }
 
 .carousel .right i {
-  font-size: 20px;
+  font-size: 1.3rem;
 }
 
 
@@ -108,4 +114,18 @@ body {
 
 .current-dot {
   background: rgba(0,0,0,0.7);
+}
+
+@media screen and (max-width: 768px) {
+  .carousel {
+    width: 100%;
+  }
+
+  .carousel .left {
+    left: 5%;
+  }
+
+  .carousel .right {
+    right: 5%;
+  }
 }
