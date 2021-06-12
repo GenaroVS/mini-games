@@ -6,13 +6,48 @@ body {
   padding: 0;
   margin: 0;
   font-size: 16px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Architects Daughter', Verdana, Geneva, Tahoma, sans-serif;
   overflow-x: hidden;
 }
+
+header {
+  display: flex;
+  background-color: rgb(100, 149, 237);
+  padding: 20px 20px;
+  box-shadow: 0 3px rgb(76, 123, 209);
+}
+
+.site-title {
+  font-weight: lighter;
+  letter-spacing: 4px;
+  margin: 0;
+  margin-left: 10px;
+  display: inline-block
+}
+
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+}
+
+footer h4 {
+  margin: 0;
+  display: inline-block;
+  letter-spacing: 2px;
+}
+
 
 .game-title {
   margin: 50px 0;
   text-align: center;
+  letter-spacing: 4px;
+  font-size: 2rem;
+  font-weight: normal;
 }
 
 .carousel {
@@ -27,12 +62,12 @@ body {
   position: relative;
   overflow: hidden;
   transition: border 100ms linear;
-  border: 2px solid transparent;
+  border: 2px solid black;
 }
 
 .carousel-container:hover,
 .carousel-container:active {
-  border: 2px solid black;
+  border: 2px solid rgb(100, 149, 237);
 }
 
 .carousel-track {
@@ -71,7 +106,7 @@ body {
   transform: translateY(-50%);
   border-radius: 50%;
   border: 1px solid black;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.15);
   width: 35px;
   height: 35px;
   z-index: 1;
@@ -117,8 +152,27 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .site-title {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+
   .carousel {
     width: 100%;
+  }
+
+  .carousel-container {
+    border: 1px solid transparent
+  }
+  .carousel-container:hover,
+  .carousel-container:active {
+    border: 1px solid cornflowerblue;
   }
 
   .carousel .left {
@@ -127,5 +181,19 @@ body {
 
   .carousel .right {
     right: 5%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .site-title {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .site-title {
+    margin: 0;
+    font-size: 1.5rem;
   }
 }
