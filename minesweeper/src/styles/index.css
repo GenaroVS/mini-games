@@ -2,6 +2,22 @@
   box-sizing: border-box;
 }
 
+:root {
+  --land-main: #00bd56;
+  --land-border: #01ac4e;
+  --ocean-main: #207dff;
+  --ocean-border: #1871ee;
+  --start-one: #f0dab1;
+  --start-two: #f6edcf;
+  --good: #966c3b;
+  --bad: #FF4233;
+
+  --sunset-one: #fff5a5;
+  --sunset-two: #ffaa64;
+  --sunset-three: #ff8264;
+  --sunset-four: #ff6464;
+}
+
 body {
   margin: 0;
   font-family: 'Architects Daughter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

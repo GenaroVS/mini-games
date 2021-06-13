@@ -1,0 +1,24 @@
+.dashboard {
+  height: 50px;
+  width: 500px;
+  margin-bottom: 80px;
+  background-color: chocolate;
+}
+
+.start {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.playing {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.dashboard-start button {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}

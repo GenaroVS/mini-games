@@ -2,19 +2,42 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  width: 500px;
-  height: 500px;
-  border: 2px solid black;
+  background-color: #fff5a5;
+  box-shadow:
+    0 0 0 5px var(--sunset-one),
+    0 0 0 15px var(--sunset-two),
+    0 0 0 30px var(--sunset-three),
+    0 0 0 60px var(--sunset-four);
+
+/*   box-shadow:
+    0 0 0 5px #feff89,
+    0 0 0 15px #ff9f68,
+    0 0 0 30px #f85959,
+    0 0 0 60px #ac005d; */
+}
+
+.beginner {
+  width: 440px;
+  height: 400px;
+}
+
+.intermediate {
+  height: 520px;
+  width: 600px;
+}
+
+.expert {
+  height: 640px;
+  width: 1240px;
 }
 
 .tile {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10%;
-  height: 10%;
   font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
 }
 
 .bomb {
@@ -22,19 +45,30 @@
 }
 
 .hidden {
-  background-color: #357DB5;
+  background-color: var(--start-one);
 }
 
 .hidden:nth-child(odd) {
-  background-color: #136AAC;
+  background-color: var(--start-two);
 }
 
-.reveal {
-  background-color: #FFE37F;
+.ocean {
+  box-shadow: inset 0 0 0 2px var(--ocean-border);
+  background-color: var(--ocean-main);
+}
+
+.land {
+  box-shadow: inset 0 0 0 2px var(--land-border);
+  background-color: var(--land-main);
+
 }
 
 .bad-icons {
-  color: #FF4233;
+  color: var(--bad);
+}
+
+.good-icons {
+  color: var(--good);
 }
 
 .gameEnd {
