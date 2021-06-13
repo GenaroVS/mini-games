@@ -2,16 +2,30 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { build, reveal, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
-import Tile from './Tile';
+import Tile from './TileTest';
+
+/*
+There are three difficulty levels for Minesweeper: beginner, intermediate, and expert.
+Beginner has a total of ten mines and the board size is either 8 × 8, 9 × 9, or 10 × 10.
+Intermediate has 40 mines and also varies in size between 13 × 15 and 16 × 16.
+Finally, expert has 99 mines and is always 16 × 30 (or 30 × 16).
+*/
 
 const Board = () => {
   const { board, gameOver, tilesNeeded } = useAppSelector(state => state.board);
+  const difficulty = useAppSelector(state => state.dash.difficulty);
+  const width = useAppSelector(state => state.dash.width);
+  const height = useAppSelector(state => state.dash.height);
+  const flagTotal = useAppSelector(state => state.dash.flagTotal);
   const dispatch = useAppDispatch();
 
-  const renderBoard = (board: BoardType):JSX.Element[][] => {
+  const renderBoard = (board: BoardType):JSX.Element[][] | null => {
+    if (board.length === 0) return null;
+    console.log('board render');
     return board.map((row, i) => {
       return row.map((box, j) => {
         return <Tile
+          key={`${i}-${j}`}
           gameOver={gameOver}
           tilesNeeded={tilesNeeded}
           row={i}
@@ -59,17 +73,17 @@ const Board = () => {
 
   useEffect(() => {
     dispatch(build({
-      width: 10,
-      height: 10,
-      bombs: 10
+      width: width,
+      height: height,
+      bombs: flagTotal
     }));
-  }, [dispatch])
+  }, [dispatch, width, height, flagTotal])
 
   return (
     <div
       onContextMenu={flagHandler}
       onClick={clickHandler}
-      className='board'>
+      className={`board ${difficulty}`}>
       { (gameOver || tilesNeeded === 0) && <div className='gameEnd'></div> }
       {board && renderBoard(board)}
     </div>

@@ -76,7 +76,13 @@ const boardReducers = {
   build: (state: BoardState, action: PayloadAction<buildPayload>) => {
     let { width, height, bombs } = action.payload;
     state.board = createRandBoard(bombs, width, height)
-    state.tilesNeeded = (width * height) - bombs;
+    state.gameOver = false;
+    state.flags = bombs;
+    if (width * height - bombs === 0) {
+      state.tilesNeeded = Infinity;
+    } else {
+      state.tilesNeeded = width * height - bombs;
+    }
   },
 
   reveal: (state: BoardState, action: PayloadAction<revealPayload>) => {
@@ -91,7 +97,13 @@ const boardReducers = {
   flag: (state: BoardState, action: PayloadAction<revealPayload>) => {
     let { row, col } = action.payload;
     let tile = state.board[row][col];
-    tile.flagged = !tile.flagged
+    if (tile.flagged) {
+      tile.flagged = false;
+      state.flags += 1;
+    } else {
+      tile.flagged = true;
+      state.flags -= 1;
+    }
   }
 }
 

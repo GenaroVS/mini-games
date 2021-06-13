@@ -14,12 +14,14 @@ export interface BoardState {
   board: BoardType;
   tilesNeeded: number;
   gameOver: boolean;
+  flags: number;
 }
 
 const initialState: BoardState = {
   board: [],
   tilesNeeded: Infinity,
   gameOver: false,
+  flags: 0
 };
 
 export const boardSlice = createSlice({
