@@ -11,11 +11,11 @@ const dashReducers = {
       state.flagTotal = 40;
     } else if (action.payload === 'beginner') {
       state.width = 11;
-      state.height = 10;
+      state.height = 9;
       state.flagTotal = 10;
     } else if (action.payload === 'expert') {
-      state.width = 31;
-      state.height = 16;
+      state.width = 29;
+      state.height = 17;
       state.flagTotal = 99;
     }
   },
@@ -26,7 +26,6 @@ const dashReducers = {
 
   reset: (state: DashState, action: PayloadAction<undefined>) => {
     state.isPlaying = false;
-    state.difficulty = 'intermediate';
     state.width = 0;
     state.height = 0;
     state.flagTotal = 0;

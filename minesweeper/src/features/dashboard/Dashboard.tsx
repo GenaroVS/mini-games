@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setDifficulty, tick, reset } from './dashSlice';
 import './dashboard.css';
@@ -38,11 +38,11 @@ const DashBoard = () => {
     return (
       <div className='dashboard playing'>
         <div className='dash-flag'>
-          <i className='fas fa-flag bad-icons'></i>
           <span>{flags}</span>
+          <i className='fas fa-flag bad-icons'></i>
         </div>
-        <button onClick={resetHandler}>Reset</button>
-        <div>{`Time: ${clock}`}</div>
+        <button className='reset-Btn' onClick={resetHandler}>Reset</button>
+        <div className='timer'>{`Time: ${clock}`}</div>
       </div>
     )
 
@@ -54,18 +54,21 @@ const DashBoard = () => {
         onClick={selectDifficulty}
         autoFocus
         type='button'
+        className='level'
         value='beginner'>
         Beginner
       </button>
       <button
         onClick={selectDifficulty}
         type='button'
+        className='level'
         value='intermediate'>
         Intermediate
       </button>
       <button
         onClick={selectDifficulty}
         type='button'
+        className='level'
         value='expert'>
         Expert
       </button>
