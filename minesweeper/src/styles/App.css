@@ -1,9 +1,15 @@
 #App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.game-title {
+  letter-spacing: 4px;
+  font-weight: lighter;
 }
 
 .back {
@@ -20,4 +26,11 @@
 .back:hover,
 .back:active {
   border-bottom: 2px solid black;
+}
+
+@media screen and (max-width: 420px) {
+  .back {
+    top: 10px;
+    left: 10px;
+  }
 }
