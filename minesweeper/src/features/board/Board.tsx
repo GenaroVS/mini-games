@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { build, reveal, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
-import Tile from './TileTest';
+import Tile from './Tile';
 
 /*
 There are three difficulty levels for Minesweeper: beginner, intermediate, and expert.
@@ -18,6 +18,8 @@ const Board = () => {
   const height = useAppSelector(state => state.dash.height);
   const flagTotal = useAppSelector(state => state.dash.flagTotal);
   const dispatch = useAppDispatch();
+
+  const hasGameEnded = () => gameOver || tilesNeeded === 0 || width === 0;
 
   const renderBoard = (board: BoardType):JSX.Element[][] | null => {
     if (board.length === 0) return null;
@@ -38,7 +40,7 @@ const Board = () => {
 
   const clickHandler: React.MouseEventHandler<HTMLDivElement> = (e) => {
     let target = e.target as typeof e.target & HTMLDivElement;
-    if (target.classList.contains('gameEnd')) return;
+    if (hasGameEnded()) return;
     if (target.nodeName === 'I' || target.hasChildNodes()) return;
 
     let row = parseInt(target.dataset.row as string, 10);
@@ -55,7 +57,7 @@ const Board = () => {
     e.preventDefault();
     let target = e.target as typeof e.target & HTMLDivElement;
 
-    if (target.classList.contains('gameEnd')) return;
+    if (hasGameEnded()) return;
 
     if (target.nodeName === 'I') {
       let parent = target.parentNode as HTMLDivElement;
@@ -84,7 +86,7 @@ const Board = () => {
       onContextMenu={flagHandler}
       onClick={clickHandler}
       className={`board ${difficulty}`}>
-      { (gameOver || tilesNeeded === 0) && <div className='gameEnd'></div> }
+      { hasGameEnded() && <div className='gameEnd'></div> }
       {board && renderBoard(board)}
     </div>
   )

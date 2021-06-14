@@ -75,9 +75,17 @@ const createRandBoard = (bombs: number, width: number, height: number):BoardType
 const boardReducers = {
   build: (state: BoardState, action: PayloadAction<buildPayload>) => {
     let { width, height, bombs } = action.payload;
-    state.board = createRandBoard(bombs, width, height)
     state.gameOver = false;
     state.flags = bombs;
+
+    if (window.innerWidth <= 920 && bombs === 99) {
+      state.board = createRandBoard(bombs, height, width) // flip the board
+    } else if (window.innerWidth <= 640) {
+      state.board = createRandBoard(bombs, height, width) // flip the board
+    } else {
+      state.board = createRandBoard(bombs, width, height)
+    }
+
     if (width * height - bombs === 0) {
       state.tilesNeeded = Infinity;
     } else {
