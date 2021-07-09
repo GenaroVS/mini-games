@@ -50,8 +50,6 @@ app.get('/minesweeper', (req, res, next) => {
   });
 });
 
-app.use('/api', require('./routes/api.js'));
-
 app.listen(PORT, () => {
   console.log(`Games Server listening on port ${PORT}`)
 })
