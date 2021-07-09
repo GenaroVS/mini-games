@@ -1,5 +1,5 @@
 .dashboard {
-  width: 400px;
+  width: 500px;
   height: 50px;
   position: relative;
   margin-bottom: 80px;
@@ -17,8 +17,8 @@
   cursor: pointer;
   font-size: 1.3rem;
   border-radius: .25rem;
-  padding: .25rem .75rem;
-  font-family: 'Architects Daughter';
+  padding: .40rem .75rem;
+  font-family: 'Treasure Map', cursive;
   letter-spacing: 1px;
   transition:
     transform 100ms linear,
@@ -100,7 +100,7 @@
 
 @media screen and (max-width: 420px) {
   .dashboard {
-    width: 350px;
+    width: 100vw;
   }
 
   .level {
@@ -109,6 +109,13 @@
 
   .reset-Btn {
     margin: 0 25px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+
+  .level {
+    font-size: .9rem;
   }
 }
 
