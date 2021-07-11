@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getTopPlayers, postEntry } from './leadersAPI'
+import { AxiosError } from 'axios';
 import { RootState } from '../../app/store';
 
 export type Rank = {
@@ -22,19 +23,36 @@ const initialState: LeadersState = {
   expert: []
 }
 
+const errorHandler = (err: AxiosError) => {
+  if (err.response) {
+    console.log(err.response.data);
+    console.log(err.response.status);
+    console.log(err.response.headers);
+  } else if (err.request) {
+    console.log(err.request);
+  } else {
+    console.log('Error: ', err.message);
+  }
+  console.log(err.config);
+}
+
 export const getAllPlayers = createAsyncThunk(
   'leaders/getAllPlayers',
-  async (thunkAPI) => {
+  async (_, thunkAPI) => {
     let leaders: Rank[][] = []
-    const responses = await Promise.all([
-      getTopPlayers('beginner'),
-      getTopPlayers('intermediate'),
-      getTopPlayers('expert')
-    ])
+    try {
+      const responses = await Promise.all([
+        getTopPlayers('beginner'),
+        getTopPlayers('intermediate'),
+        getTopPlayers('expert')
+      ])
 
-    responses.forEach(res => {
-      leaders.push(res.data)
-    })
+      responses.forEach(res => {
+        leaders.push(res.data)
+      })
+    } catch(error) {
+      errorHandler(error)
+    }
 
     return leaders
   }
@@ -43,8 +61,13 @@ export const getAllPlayers = createAsyncThunk(
 export const postTopEntry = createAsyncThunk(
   'leaders/postTopEntry',
   async (entry: Rank, thunkAPI) => {
-    const response = await postEntry(entry);
-    return response.data;
+    try {
+      const response = await postEntry(entry);
+      return response.data;
+    } catch(error) {
+      errorHandler(error)
+    }
+    return [];
   }
 )
 
@@ -56,13 +79,17 @@ export const dashSlice = createSlice({
     builder
       .addCase(getAllPlayers.fulfilled, (state: LeadersState, action: PayloadAction<Rank[][]>) => {
         action.payload.forEach(rankings => {
-          let level = rankings[0].level
-          state[level] = rankings
+          if (rankings.length > 0) {
+            let level = rankings[0].level
+            state[level] = rankings
+          }
         })
       })
       .addCase(postTopEntry.fulfilled, (state: LeadersState, action: PayloadAction<Rank[]>) => {
-        let level = action.payload[0].level
-        state[level] = action.payload
+        if (action.payload.length > 0) {
+          let level = action.payload[0].level
+          state[level] = action.payload
+        }
       })
   }
 });
