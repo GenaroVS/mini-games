@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { getAllPlayers } from './leadersSlice'
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import './leaders.css'
 
 export type Rank = {
@@ -77,10 +79,10 @@ let data: Rank[] = [
 ]
 
 const LeaderBoard = () => {
-    const [level, setLevel] = useState('Beginner')
+    const [level, setLevel] = useState('Beginner');
 
     const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-        let target = e.target as typeof e.target & HTMLOptionElement
+        let target = e.target as typeof e.target & HTMLOptionElement;
         setLevel(target.value);
     }
 
