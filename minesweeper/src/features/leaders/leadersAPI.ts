@@ -1,7 +1,13 @@
 import axios, { AxiosResponse } from 'axios'
 import { Rank } from './leadersSlice'
 
-const API_URL = 'https://arcade-gvsalinas.herokuapp.com';
+let API_URL:string;
+
+if (process.env.NODE_ENV === 'production') {
+    API_URL = 'https://arcade-gvsalinas.herokuapp.com';
+} else {
+    API_URL = 'http://localhost:5000'
+}
 
 export const getTopPlayers = (level: string): Promise<AxiosResponse<Rank[]>> => {
     return axios.get(`${API_URL}/ms/${level}`);

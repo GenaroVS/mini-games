@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { build, reveal, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
-import Tile from './Tile';
+import Tile from './TileTest';
+import EndScreen from '../endscreen/EndScreen';
 
 /*
 There are three difficulty levels for Minesweeper: beginner, intermediate, and expert.
@@ -13,13 +14,13 @@ Finally, expert has 99 mines and is always 16 × 30 (or 30 × 16).
 
 const Board = () => {
   const { board, gameOver, tilesNeeded } = useAppSelector(state => state.board);
-  const difficulty = useAppSelector(state => state.dash.difficulty);
+  const level = useAppSelector(state => state.dash.level);
   const width = useAppSelector(state => state.dash.width);
   const height = useAppSelector(state => state.dash.height);
   const flagTotal = useAppSelector(state => state.dash.flagTotal);
   const dispatch = useAppDispatch();
-
   const hasGameEnded = () => gameOver || tilesNeeded === 0 || width === 0;
+
 
   const renderBoard = (board: BoardType):JSX.Element[][] | null => {
     if (board.length === 0) return null;
@@ -40,8 +41,9 @@ const Board = () => {
 
   const clickHandler: React.MouseEventHandler<HTMLDivElement> = (e) => {
     let target = e.target as typeof e.target & HTMLDivElement;
-    if (hasGameEnded()) return;
     if (target.nodeName === 'I' || target.hasChildNodes()) return;
+
+    if (hasGameEnded()) return;
 
     let row = parseInt(target.dataset.row as string, 10);
     let col = parseInt(target.dataset.col as string, 10);
@@ -85,8 +87,8 @@ const Board = () => {
     <div
       onContextMenu={flagHandler}
       onClick={clickHandler}
-      className={`board ${difficulty}`}>
-      { hasGameEnded() && <div className='gameEnd'></div> }
+      className={`board ${level}`}>
+      <EndScreen width={width} gameOver={gameOver} gameWon={tilesNeeded === 0} />
       {board && renderBoard(board)}
     </div>
   )

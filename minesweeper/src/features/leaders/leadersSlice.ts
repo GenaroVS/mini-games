@@ -94,7 +94,7 @@ export const dashSlice = createSlice({
   }
 });
 
-export const leaders = (state: RootState) => state.leaders;
+export const selectLeaders = (state: RootState) => state.leaders;
 export const selectBeginners = (state: RootState) => state.leaders.beginner;
 export const selectIntermediate = (state: RootState) => state.leaders.intermediate;
 export const selectExpert = (state: RootState) => state.leaders.expert;

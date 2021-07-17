@@ -86,20 +86,6 @@
   color: var(--good);
 }
 
-.gameEnd {
-  display: flex;
-  justify-content: center;
-  align-items: center;;
-  position: absolute;
-  background-color: black;
-  opacity: .1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-}
-
 @media screen and (max-width: 920px) {
   .expert {
     width: 425px;
