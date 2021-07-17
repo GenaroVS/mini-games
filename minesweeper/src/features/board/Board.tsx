@@ -88,7 +88,7 @@ const Board = () => {
       onContextMenu={flagHandler}
       onClick={clickHandler}
       className={`board ${level}`}>
-      <EndScreen width={width} gameOver={gameOver} gameWon={tilesNeeded === 0} />
+      { hasGameEnded() && <EndScreen /> }
       {board && renderBoard(board)}
     </div>
   )

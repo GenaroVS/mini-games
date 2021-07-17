@@ -35,6 +35,8 @@ const dashReducers = {
     state.height = 0;
     state.flagTotal = 0;
     state.clock = 0;
+    state.isHighScore = false;
+    state.highScore = null;
   },
 
   setHighScore: (state: DashState, action: PayloadAction<highScorePayload>) => {

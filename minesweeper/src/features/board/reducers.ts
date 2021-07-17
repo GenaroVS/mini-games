@@ -100,6 +100,7 @@ const boardReducers = {
 
   endGame: (state: BoardState) => {
     state.gameOver = true;
+    state.tilesNeeded = Infinity;
   },
 
   flag: (state: BoardState, action: PayloadAction<revealPayload>) => {

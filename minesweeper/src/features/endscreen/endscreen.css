@@ -20,6 +20,7 @@
   width: 10em;
   margin: 0 auto;
   border-radius: .24rem;
+  position: relative;
 }
 
 .win-info input {
@@ -41,4 +42,14 @@
 .win-btn:hover {
   opacity: 1;
   box-shadow: 0 0 0 3px #d33f3f;
+}
+
+.win-message {
+  font-size: 1.8rem;
+  color: white;
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  white-space: nowrap;
+  transform: translateX(-50%);
 }
