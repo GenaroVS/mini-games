@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { reset } from '../dashboard/dashSlice';
 import { endGame } from '../board/boardSlice';
+import { postTopEntry } from '../leaders/leadersSlice';
 import './endscreen.css'
 
 const EndScreen: React.FC = () => {
@@ -10,7 +11,6 @@ const EndScreen: React.FC = () => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const dispatch = useAppDispatch();
-    console.log(isHighScore, highScore)
 
     const handleNameSubmit:React.MouseEventHandler<HTMLButtonElement> = (e) => {
         if (name.length !== 3) {
@@ -18,6 +18,13 @@ const EndScreen: React.FC = () => {
         } else {
             dispatch(reset())
             dispatch(endGame())
+            if (isHighScore && highScore) {
+                dispatch(postTopEntry({
+                    name: name,
+                    score: highScore?.score,
+                    level: highScore?.level,
+                }))
+            }
         }
 
     }

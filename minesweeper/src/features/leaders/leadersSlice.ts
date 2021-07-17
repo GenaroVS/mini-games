@@ -6,7 +6,7 @@ import { RootState } from '../../app/store';
 export type Rank = {
   name: string;
   score: number;
-  date: string;
+  date?: string;
   level: string;
 }
 

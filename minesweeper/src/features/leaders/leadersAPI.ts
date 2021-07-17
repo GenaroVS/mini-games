@@ -13,7 +13,11 @@ export const getTopPlayers = (level: string): Promise<AxiosResponse<Rank[]>> => 
     return axios.get(`${API_URL}/ms/${level}`);
 }
 
-export const postEntry = (params: Rank): Promise<AxiosResponse<Rank[]>> => {
-    return axios.post(`${API_URL}/ms/${params['level']}`, { params: params });
+export const postEntry = (data: Rank): Promise<AxiosResponse<Rank[]>> => {
+    return axios.post(`${API_URL}/ms/${data['level']}`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 }
 
