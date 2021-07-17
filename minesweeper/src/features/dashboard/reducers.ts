@@ -1,9 +1,14 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { DashState } from './dashSlice';
+import { DashState, HighScore } from './dashSlice';
+import { Rank } from'../leaders/leadersSlice'
+
+interface highScorePayload extends HighScore {
+  rankings: Rank[]
+}
 
 const dashReducers = {
-  setDifficulty: (state: DashState, action: PayloadAction<string>) => {
-    state.difficulty = action.payload;
+  setLevel: (state: DashState, action: PayloadAction<string>) => {
+    state.level = action.payload;
     state.isPlaying = true;
     if (action.payload === 'intermediate') {
       state.width = 15;
@@ -31,6 +36,16 @@ const dashReducers = {
     state.flagTotal = 0;
     state.clock = 0;
   },
+
+  setHighScore: (state: DashState, action: PayloadAction<highScorePayload>) => {
+    let rankings = action.payload.rankings;
+    let score = action.payload.score;
+
+    if (score < rankings[rankings.length - 1].score) {
+      state.highScore = { score, level: action.payload.level }
+      state.isHighScore = true;
+    }
+  }
 }
 
 export default dashReducers;

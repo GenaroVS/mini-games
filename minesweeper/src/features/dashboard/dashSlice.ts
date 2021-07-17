@@ -1,14 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import dashReducers from './reducers';
+
+export interface HighScore {
+  score: number;
+  level: string;
+}
 
 export type DashState = {
   clock: number;
   width: number;
   height: number;
-  difficulty: string;
+  level: string;
   flagTotal: number;
   isPlaying: boolean;
+  isHighScore: boolean;
+  highScore: HighScore | null;
 }
 
 const initialState: DashState = {
@@ -16,8 +23,10 @@ const initialState: DashState = {
   width: 0,
   height: 0,
   flagTotal: 0,
-  difficulty: 'intermediate',
-  isPlaying: false
+  level: 'intermediate',
+  isPlaying: false,
+  isHighScore: false,
+  highScore: null
 }
 
 export const dashSlice = createSlice({
@@ -26,8 +35,14 @@ export const dashSlice = createSlice({
   reducers: dashReducers
 });
 
-export const { setDifficulty, tick, reset } = dashSlice.actions;
+export const { setLevel, tick, reset, setHighScore } = dashSlice.actions;
 
 export const selectDash = (state: RootState) => state.dash;
+export const selectDashAttri = createSelector(
+  (state: RootState) => state.dash.isPlaying,
+  (state: RootState) => state.dash.clock,
+  (state: RootState) => state.dash.level,
+  (isPlaying, clock, level) => ({ isPlaying, clock, level })
+)
 
 export default dashSlice.reducer;

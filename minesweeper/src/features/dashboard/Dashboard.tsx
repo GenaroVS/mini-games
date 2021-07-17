@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setDifficulty, tick, reset } from './dashSlice';
+import { setLevel, tick, reset, setHighScore, selectDashAttri } from './dashSlice';
+import { selectLeaders } from '../leaders/leadersSlice'
 import './dashboard.css';
 
 export let timer:NodeJS.Timeout;
 
 const DashBoard = () => {
-  console.log('dash render');
   const gameOver = useAppSelector(state => state.board.gameOver);
   const tilesNeeded = useAppSelector(state => state.board.tilesNeeded);
-  const isPlaying  = useAppSelector(state => state.dash.isPlaying);
-  const flags  = useAppSelector(state => state.board.flags);
-  const clock  = useAppSelector(state => state.dash.clock);
+  const flags = useAppSelector(state => state.board.flags);
+  const { isPlaying, clock, level } = useAppSelector(selectDashAttri);
+  const leaders = useAppSelector(selectLeaders);
   const dispatch = useAppDispatch();
 
-  const selectDifficulty: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const selectLevel: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     let target = e.target as typeof e.target & HTMLButtonElement;
-    dispatch(setDifficulty(target.value));
+    dispatch(setLevel(target.value));
 
     timer = setInterval(() => {
       dispatch(tick());
@@ -24,15 +24,19 @@ const DashBoard = () => {
   }
 
   const resetHandler = (e?: React.SyntheticEvent): void => {
-    if (timer) {
-      clearInterval(timer);
-    }
+    if (timer) clearInterval(timer);
     dispatch(reset());
   }
 
-  if (gameOver || tilesNeeded === 0) {
-    clearInterval(timer);
-  }
+  useEffect(() => {
+    if (gameOver || tilesNeeded === 0) {
+      if (tilesNeeded === 0) {
+        dispatch(setHighScore({ score: clock, level, rankings: leaders[level] }))
+      }
+      clearInterval(timer);
+    }
+  }, [dispatch, gameOver, tilesNeeded, clock, level, leaders])
+
 
   if (isPlaying) {
     return (
@@ -51,7 +55,7 @@ const DashBoard = () => {
   return (
     <div className='dashboard start'>
       <button
-        onClick={selectDifficulty}
+        onClick={selectLevel}
         autoFocus
         type='button'
         className='level'
@@ -59,14 +63,14 @@ const DashBoard = () => {
         Beginner
       </button>
       <button
-        onClick={selectDifficulty}
+        onClick={selectLevel}
         type='button'
         className='level'
         value='intermediate'>
         Intermediate
       </button>
       <button
-        onClick={selectDifficulty}
+        onClick={selectLevel}
         type='button'
         className='level'
         value='expert'>
