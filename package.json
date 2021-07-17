@@ -22,5 +22,8 @@
   "cacheDirectories": [
     "node_modules",
     "minesweeper/node_modules"
-  ]
+  ],
+  "engines": {
+    "node": "15.x"
+  }
 }

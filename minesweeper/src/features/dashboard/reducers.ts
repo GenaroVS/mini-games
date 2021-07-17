@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { DashState, HighScore } from './dashSlice';
+import { DashState, HighScore, HIGHSCORECOUNT } from './dashSlice';
 import { Rank } from'../leaders/leadersSlice'
 
 interface highScorePayload extends HighScore {
@@ -43,7 +43,7 @@ const dashReducers = {
     let rankings = action.payload.rankings;
     let score = action.payload.score;
 
-    if (rankings.length > 0 && score < rankings[rankings.length - 1].score) {
+    if (rankings.length < HIGHSCORECOUNT || score < rankings[rankings.length - 1].score) {
       state.highScore = { score, level: action.payload.level }
       state.isHighScore = true;
     }

@@ -2,6 +2,8 @@ import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import dashReducers from './reducers';
 
+export const HIGHSCORECOUNT = 20;
+
 export interface HighScore {
   score: number;
   level: string;
