@@ -43,7 +43,7 @@ const dashReducers = {
     let rankings = action.payload.rankings;
     let score = action.payload.score;
 
-    if (score < rankings[rankings.length - 1].score) {
+    if (rankings.length > 0 && score < rankings[rankings.length - 1].score) {
       state.highScore = { score, level: action.payload.level }
       state.isHighScore = true;
     }
