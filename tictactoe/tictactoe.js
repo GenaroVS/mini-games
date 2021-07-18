@@ -137,3 +137,43 @@ function handlePotentialWin(row, col) {
     board.isX = !board.isX;
   }
 }
+
+/*************** AUDIO *******************/
+
+let music = new Howl({
+  src: ['./assets/Lobby_Theme.mp3'],
+  autoplay: true,
+  loop: true,
+  volume: 0.2,
+  onplayerror: function() {
+    music.once('unlock', function() {
+      music.play();
+    });
+  }
+});
+
+var hidden, visibilityChange;
+if (typeof document.hidden !== "undefined") {
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+  hidden = "msHidden";
+  visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+  hidden = "webkitHidden";
+  visibilityChange = "webkitvisibilitychange";
+}
+
+if (hidden) {
+  document.addEventListener(visibilityChange, () => {
+    if (document.visibilityState === 'visible') {
+      music.play()
+      music.fade(0, 0.2, 1000);
+    } else {
+      music.fade(0.2, 0, 1000);
+      music.once('fade', () => {
+        music.pause();
+      })
+    }
+  });
+}

@@ -8,7 +8,7 @@ const titleHeader = document.querySelector('.game-title')
 
 const slideWidth = slides[0].getBoundingClientRect().width;
 let currentIdx = 0;
-const gameTitles = ['Tic Tac Toe', 'Minesweeper', 'More coming soon'];
+const gameTitles = ['Minesweeper', 'Tic Tac Toe', 'More coming soon'];
 
 const slideCarousel = (track, target) => {
   track.style.transform = `translateX(-${target.style.left})`;
@@ -73,3 +73,44 @@ slides.forEach((slide, idx) => {
 
 leftBtn.style.visibility = 'hidden';
 titleHeader.textContent = gameTitles[0];
+
+/*************** AUDIO *******************/
+
+let music = new Howl({
+  src: ['./assets/Lobby_Theme.mp3'],
+  autoplay: true,
+  loop: true,
+  volume: 0.2,
+  onplayerror: function() {
+    music.once('unlock', function() {
+      music.play();
+    });
+  }
+});
+
+var hidden, visibilityChange;
+if (typeof document.hidden !== "undefined") {
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+  hidden = "msHidden";
+  visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+  hidden = "webkitHidden";
+  visibilityChange = "webkitvisibilitychange";
+}
+
+if (hidden) {
+  document.addEventListener(visibilityChange, () => {
+    if (document.visibilityState === 'visible') {
+      music.play()
+      music.fade(0, 0.2, 1000);
+    } else {
+      music.fade(0.2, 0, 1000);
+      music.once('fade', () => {
+        music.pause();
+      })
+    }
+  });
+}
+
