@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setLevel, tick, reset, setHighScore, selectDashAttri } from './dashSlice';
-import { selectLeaders } from '../leaders/leadersSlice'
+import { selectLeaders } from '../leaders/leadersSlice';
+import { endGame } from '../board/boardSlice';
+import { main_theme, playTempSound, win_sound } from '../soundtrack/soundtrack';
 import './dashboard.css';
 
 export let timer:NodeJS.Timeout;
@@ -26,12 +28,14 @@ const DashBoard = () => {
   const resetHandler = (e?: React.SyntheticEvent): void => {
     if (timer) clearInterval(timer);
     dispatch(reset());
+    dispatch(endGame());
   }
 
   useEffect(() => {
     if (gameOver || tilesNeeded === 0) {
       if (tilesNeeded === 0) {
-        dispatch(setHighScore({ score: clock, level, rankings: leaders[level] }))
+        playTempSound(win_sound, main_theme)
+        dispatch(setHighScore({ score: clock, level, rankings: leaders[level] }));
       }
       clearInterval(timer);
     }

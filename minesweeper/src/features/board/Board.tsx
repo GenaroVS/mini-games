@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { build, reveal, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
-import Tile from './Tile';
+import Tile from './TileTest';
 import EndScreen from '../endscreen/EndScreen';
+import { lose_sound, main_theme, playTempSound } from '../soundtrack/soundtrack';
 
 /*
 There are three difficulty levels for Minesweeper: beginner, intermediate, and expert.
@@ -50,6 +51,7 @@ const Board = () => {
 
     if (board[row][col].isBomb) {
       dispatch(endGame())
+      playTempSound(lose_sound, main_theme);
     } else if (!board[row][col].revealed) {
       dispatch(reveal({ row, col }));
     }
