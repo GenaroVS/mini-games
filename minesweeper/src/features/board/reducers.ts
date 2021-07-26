@@ -61,9 +61,8 @@ const setRandBombs = (board: BoardType, start: number[], bombs: number):BoardTyp
       board[y][x].isBomb = true;
       bombs -= 1;
     } else if (
-        Math.abs(startX - x) > 1 &&
-        Math.abs(startY - y) > 1 &&
-        !board[y][x].isBomb
+        (Math.abs(startX - x) > 1 || Math.abs(startY - y) > 1)
+        && !board[y][x].isBomb
         ) {
       board[y][x].isBomb = true;
       bombs -= 1;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { build, reveal, endGame, flag, BoardType } from './boardSlice';
+import { build, reveal, initMove, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
 import Tile from './TileTest';
 import EndScreen from '../endscreen/EndScreen';
@@ -52,6 +52,8 @@ const Board = () => {
     if (board[row][col].isBomb) {
       dispatch(endGame())
       playTempSound(lose_sound, main_theme);
+    } else if (width * height - flagTotal === tilesNeeded) {
+      dispatch(initMove({ start: [row, col] }))
     } else if (!board[row][col].revealed) {
       dispatch(reveal({ row, col }));
     }
