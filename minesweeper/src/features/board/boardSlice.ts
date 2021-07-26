@@ -30,7 +30,7 @@ export const boardSlice = createSlice({
   reducers: boardReducers
 });
 
-export const { build, reveal, endGame, flag } = boardSlice.actions;
+export const { build, initMove, reveal, endGame, flag } = boardSlice.actions;
 
 export const selectBoard = (state: RootState) => state.board;
 
