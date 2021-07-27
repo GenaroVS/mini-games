@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getAllPlayers, Rank } from './leadersSlice'
+import { getAllPlayers, Rank, selectRankings } from './leadersSlice'
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import './leaders.css'
 
@@ -10,7 +10,7 @@ const open: React.MouseEventHandler<HTMLElement> = (e) => {
 
 const LeaderBoard = () => {
     const [level, setLevel] = useState('beginner');
-    const rankings = useAppSelector(state => state.leaders);
+    const rankings = useAppSelector(selectRankings);
     const dispatch = useAppDispatch();
 
     const handleSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {

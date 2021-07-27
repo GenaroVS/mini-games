@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { reset } from '../dashboard/dashSlice';
 import { endGame } from '../board/boardSlice';
 import { postTopEntry } from '../leaders/leadersSlice';
 import './endscreen.css'
@@ -11,17 +11,21 @@ const EndScreen: React.FC = () => {
     const [name, setName] = useState('');
     const dispatch = useAppDispatch();
 
-    const handleNameSubmit:React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    const handleNameSubmit:React.MouseEventHandler<HTMLButtonElement> = async (e) => {
         if (name.length < 3) return;
 
-        dispatch(reset());
-        dispatch(endGame());
         if (isHighScore && highScore) {
-            dispatch(postTopEntry({
-                name: name,
-                score: highScore?.score,
-                level: highScore?.level,
-            }))
+            try {
+                let result = await dispatch(postTopEntry({
+                    name: name,
+                    score: highScore?.score,
+                    level: highScore?.level,
+                }));
+                unwrapResult(result);
+                dispatch(endGame());
+            } catch(err) {
+                console.log(err);
+            }
         }
     }
 
