@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setLevel, tick, reset, setHighScore, selectDashAttri } from './dashSlice';
-import { selectLeaders } from '../leaders/leadersSlice';
-import { endGame } from '../board/boardSlice';
+import { selectRankings } from '../leaders/leadersSlice';
 import { main_theme, playTempSound, win_sound } from '../soundtrack/soundtrack';
 import './dashboard.css';
 
@@ -13,7 +12,7 @@ const DashBoard = () => {
   const tilesNeeded = useAppSelector(state => state.board.tilesNeeded);
   const flags = useAppSelector(state => state.board.flags);
   const { isPlaying, clock, level } = useAppSelector(selectDashAttri);
-  const leaders = useAppSelector(selectLeaders);
+  const leaders = useAppSelector(selectRankings);
   const dispatch = useAppDispatch();
 
   const selectLevel: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -28,7 +27,6 @@ const DashBoard = () => {
   const resetHandler = (e?: React.SyntheticEvent): void => {
     if (timer) clearInterval(timer);
     dispatch(reset());
-    dispatch(endGame());
   }
 
   useEffect(() => {

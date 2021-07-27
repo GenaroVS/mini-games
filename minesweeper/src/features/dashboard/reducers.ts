@@ -25,11 +25,11 @@ const dashReducers = {
     }
   },
 
-  tick: (state: DashState, action: PayloadAction<undefined>) => {
+  tick: (state: DashState) => {
     state.clock += 1;
   },
 
-  reset: (state: DashState, action: PayloadAction<undefined>) => {
+  reset: (state: DashState) => {
     state.isPlaying = false;
     state.width = 0;
     state.height = 0;

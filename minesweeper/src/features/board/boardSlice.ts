@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { reset } from '../dashboard/dashSlice';
 import boardReducers from './reducers';
 
 export type TileType = {
@@ -27,7 +28,14 @@ const initialState: BoardState = {
 export const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: boardReducers
+  reducers: boardReducers,
+  extraReducers: (builder) => {
+    builder
+      .addCase(reset, (state: BoardState) => {
+        state.gameOver = true;
+        state.tilesNeeded = Infinity;
+      })
+  }
 });
 
 export const { build, initMove, reveal, endGame, flag } = boardSlice.actions;
