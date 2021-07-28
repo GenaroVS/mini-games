@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { build, reveal, initMove, flag, BoardType } from './boardSlice';
 import { reset } from '../dashboard/dashSlice';
 import './board.css';
-import Tile from './Tile';
+import Tile from './TileTest';
 import EndScreen from '../endscreen/EndScreen';
 import { lose_sound, main_theme, playTempSound } from '../soundtrack/soundtrack';
 
