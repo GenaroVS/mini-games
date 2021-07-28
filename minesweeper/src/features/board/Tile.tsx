@@ -20,8 +20,8 @@ const Tile = ({
   col
 }: propTypes) => {
 
-  if (gameOver || tilesNeeded === 0) {
-    if (gameOver && isBomb) {
+  if (gameOver) {
+    if (tilesNeeded !== 0 && isBomb) {
       return (
         <div className='tile land' data-row={row} data-col={col}>
           <i className="fas fa-fire bad-icons"></i>

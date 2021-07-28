@@ -101,11 +101,6 @@ const boardReducers = {
   build: (state: BoardState, action: PayloadAction<buildPayload>) => {
     let { width, height, bombs } = action.payload;
 
-    if (width === 0 || height === 0) return;
-
-    state.gameOver = false;
-    state.flags = bombs;
-
     if (window.innerWidth <= 920 && bombs === 99) {
       state.board = createBoard(height, width) // flip the board
     } else if (window.innerWidth <= 640) {
@@ -113,6 +108,12 @@ const boardReducers = {
     } else {
       state.board = createBoard(width, height)
     }
+
+    if (width === 0 || height === 0) return;
+
+    state.gameOver = false;
+    state.flags = bombs;
+
 
     if (width * height - bombs === 0) {
       state.tilesNeeded = Infinity;
