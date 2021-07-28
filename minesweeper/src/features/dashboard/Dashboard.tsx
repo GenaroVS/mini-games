@@ -30,7 +30,7 @@ const DashBoard = () => {
   }
 
   useEffect(() => {
-    if (gameOver || tilesNeeded === 0) {
+    if (gameOver && tilesNeeded === 0) {
       if (tilesNeeded === 0) {
         playTempSound(win_sound, main_theme)
         dispatch(setHighScore({ score: clock, level, rankings: leaders[level] }));
