@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { endGame } from '../board/boardSlice';
+import { reset } from '../dashboard/dashSlice';
 import { postTopEntry } from '../leaders/leadersSlice';
 import './endscreen.css'
 
@@ -22,7 +22,7 @@ const EndScreen: React.FC = () => {
                     level: highScore?.level,
                 }));
                 unwrapResult(result);
-                dispatch(endGame());
+                dispatch(reset());
             } catch(err) {
                 console.log(err);
             }

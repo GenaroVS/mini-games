@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { build, reveal, initMove, endGame, flag, BoardType } from './boardSlice';
+import { build, reveal, initMove, flag, BoardType } from './boardSlice';
+import { reset } from '../dashboard/dashSlice';
 import './board.css';
-import Tile from './Tile';
+import Tile from './TileTest';
 import EndScreen from '../endscreen/EndScreen';
 import { lose_sound, main_theme, playTempSound } from '../soundtrack/soundtrack';
 
@@ -20,7 +21,8 @@ const Board = () => {
   const height = useAppSelector(state => state.dash.height);
   const flagTotal = useAppSelector(state => state.dash.flagTotal);
   const dispatch = useAppDispatch();
-  const hasGameEnded = () => gameOver || tilesNeeded === 0 || width === 0;
+  const hasGameWon = () => gameOver && tilesNeeded === 0;
+  const atGameStart = () => gameOver && width === 0;
 
 
   const renderBoard = (board: BoardType):JSX.Element[][] | null => {
@@ -44,14 +46,14 @@ const Board = () => {
     let target = e.target as typeof e.target & HTMLDivElement;
     if (target.nodeName === 'I' || target.hasChildNodes()) return;
 
-    if (hasGameEnded()) return;
+    if (atGameStart() || hasGameWon()) return;
 
     let row = parseInt(target.dataset.row as string, 10);
     let col = parseInt(target.dataset.col as string, 10);
 
     if (board[row][col].isBomb) {
-      dispatch(endGame())
       playTempSound(lose_sound, main_theme);
+      dispatch(reset())
     } else if (width * height - flagTotal === tilesNeeded) {
       dispatch(initMove({ start: [row, col] }))
     } else if (!board[row][col].revealed) {
@@ -63,7 +65,7 @@ const Board = () => {
     e.preventDefault();
     let target = e.target as typeof e.target & HTMLDivElement;
 
-    if (hasGameEnded()) return;
+    if (atGameStart() || hasGameWon()) return;
 
     if (target.nodeName === 'I') {
       let parent = target.parentNode as HTMLDivElement;
@@ -92,7 +94,7 @@ const Board = () => {
       onContextMenu={flagHandler}
       onClick={clickHandler}
       className={`board ${level}`}>
-      { hasGameEnded() && <EndScreen /> }
+      { hasGameWon() && <EndScreen /> }
       {board && renderBoard(board)}
     </div>
   )

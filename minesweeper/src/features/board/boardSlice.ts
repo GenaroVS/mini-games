@@ -38,7 +38,7 @@ export const boardSlice = createSlice({
   }
 });
 
-export const { build, initMove, reveal, endGame, flag } = boardSlice.actions;
+export const { build, initMove, reveal, flag } = boardSlice.actions;
 
 export const selectBoard = (state: RootState) => state.board;
 

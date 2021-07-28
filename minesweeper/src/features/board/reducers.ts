@@ -100,6 +100,9 @@ const getNeabyBombCount = (board: BoardType, row: number, col: number):number =>
 const boardReducers = {
   build: (state: BoardState, action: PayloadAction<buildPayload>) => {
     let { width, height, bombs } = action.payload;
+
+    if (width === 0 || height === 0) return;
+
     state.gameOver = false;
     state.flags = bombs;
 
@@ -128,11 +131,7 @@ const boardReducers = {
   reveal: (state: BoardState, action: PayloadAction<revealPayload>) => {
     let { row, col } = action.payload
     revealTraverse(state, row, col);
-  },
-
-  endGame: (state: BoardState) => {
-    state.gameOver = true;
-    state.tilesNeeded = Infinity;
+    if (state.tilesNeeded === 0) state.gameOver = true;
   },
 
   flag: (state: BoardState, action: PayloadAction<revealPayload>) => {
