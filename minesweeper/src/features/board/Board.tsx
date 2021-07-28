@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { build, reveal, initMove, endGame, flag, BoardType } from './boardSlice';
 import './board.css';
-import Tile from './TileTest';
+import Tile from './Tile';
 import EndScreen from '../endscreen/EndScreen';
 import { lose_sound, main_theme, playTempSound } from '../soundtrack/soundtrack';
 
